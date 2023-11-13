@@ -1,0 +1,27 @@
+--Script para buscar usuario en base al Registro/Nomina
+
+-- Realizar la búsqueda en la tabla de estudiantes
+SELECT id_usuario
+FROM estudiantes
+WHERE registro = @registro
+
+UNION ALL
+
+-- Realizar la búsqueda en la tabla de almacenistas
+SELECT id_usuario
+FROM almacenistas
+WHERE nomina = @registro
+
+UNION ALL
+
+-- Realizar la búsqueda en la tabla de profesores
+SELECT id_usuario
+FROM profesores
+WHERE nomina = @registro
+
+UNION ALL
+
+-- Realizar la búsqueda en la tabla de coordinadores
+SELECT id_usuario
+FROM coordinadores
+WHERE nomina = @registro;

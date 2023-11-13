@@ -1,0 +1,14 @@
+C:\Users\brand\Desktop\Solution\Prueba\bin\Debug\net7.0\Prueba.deps.json
+C:\Users\brand\Desktop\Solution\Prueba\bin\Debug\net7.0\Prueba.runtimeconfig.json
+C:\Users\brand\Desktop\Solution\Prueba\bin\Debug\net7.0\Prueba.dll
+C:\Users\brand\Desktop\Solution\Prueba\bin\Debug\net7.0\Prueba.pdb
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.csproj.AssemblyReference.cache
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.AssemblyInfoInputs.cache
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.AssemblyInfo.cs
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.csproj.CoreCompileInputs.cache
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.dll
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\refint\Prueba.dll
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.pdb
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\Prueba.genruntimeconfig.cache
+C:\Users\brand\Desktop\Solution\Prueba\obj\Debug\net7.0\ref\Prueba.dll
