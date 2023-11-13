@@ -15,7 +15,7 @@ using Programa.Paginas;
 
 
 
-public class PrestamosEstudiantes : PaginaBase
+public class MantenimientoPrestamos : PaginaBase
 {
     public Estudiante EstudianteActual { get; set; }
     public Usuario UsuarioActual { get; set; }
@@ -25,7 +25,7 @@ public class PrestamosEstudiantes : PaginaBase
     public int IdUsuarioActual { get; set; }
     public bool UsuarioNuevo { get; set; }
 
-    public PrestamosEstudiantes(IConfiguration configuracion) : base("MantenimientoPrestamos", configuracion)
+    public MantenimientoPrestamos(IConfiguration configuracion) : base("MantenimientoPrestamos", configuracion)
     {
         IdUsuarioActual = -1;
         UsuarioNuevo = true;
@@ -34,34 +34,109 @@ public class PrestamosEstudiantes : PaginaBase
     }
 
 
-    
+
 
     //Constructor
-    public void MantenimientoPrestamos()
+    public override void Mostrar()
+
     {
+
+        string opcionSeleccionada = String.Empty;
         UsuarioNuevo = IdUsuarioActual == -1;
         if (!UsuarioNuevo)
         {
             Consultar();
             base.IdTpoUsuarioActual = (int)UsuarioActual.IdTpoUsuario;
         }
- 
-        if (!base.TieneAccesoAInterfazActual)
-		{
-			return;
-		}
 
-        if (UsuarioActual.IdTpoUsuario != 1)
+        
+        if (!base.TieneAccesoAInterfazActual)
         {
-            AnsiConsole.MarkupLine("[bold red]No tienes permisos para acceder a esta interfaz.[/]");
+            Console.WriteLine("No tiene acceso a esta interfaz");
+            return;
         }
-        else
+
+        Console.WriteLine("Bienvenido a la interfaz de prestamos");
+        Console.WriteLine(UsuarioActual.IdTpoUsuario);
+
+        //Perdoname Lino
+        switch (UsuarioActual.IdTpoUsuario)
         {
-            AgregarPrestamos();
+
+            case 1:  //Alumno
+
+                AnsiConsole.MarkupLine("\n[bold blue]Opciones [/]");
+
+                List<string> opciones = new();
+                opciones.Add("Agregar prestamos");
+                opciones.Add("Visualizar prestamos");
+
+                var seleccionPrompt = new SelectionPrompt<string>()
+                                            .AddChoices(opciones);
+
+                opcionSeleccionada = AnsiConsole.Prompt(seleccionPrompt);
+
+                switch (opcionSeleccionada)
+                {
+                    case "Agregar prestamos":
+                        //Se indica que se agrega un prestamo como estudiante
+                        AgregarPrestamos(UsuarioActual.IdTpoUsuario);
+
+                        break;
+
+
+                    case "Visualizar prestamos":
+
+                        AnsiConsole.MarkupLine("\n[bold blue] ¿Cuales tipos de prestamo quiere visualizar? [/]");
+                         opciones = new();
+                        opciones.Add("Aprobado");
+                        opciones.Add("Pendiente");
+                        opciones.Add("Rechazado");
+
+                        seleccionPrompt = new SelectionPrompt<string>()
+                                                    .AddChoices(opciones);
+
+                            
+                            switch(opcionSeleccionada)
+                            {
+
+                                case  "Aprobado":
+                                break;
+
+                                case "Pendiente":
+                                break;
+                            }
+
+
+
+                        break;
+
+
+                }
+
+
+                break;
+
+            case 2:  //Profesor
+
+                break;
+
+            case 3:  //Almacenista
+
+
+            
+
+                break;
+
         }
+
+
+
+
+
     }
 
-    public void AgregarPrestamos()
+    public void AgregarPrestamos(long TpUsuario)
     {
         List<Equipo> equiposPrestados = new();
         Equipo equipo = new();
@@ -200,9 +275,9 @@ public class PrestamosEstudiantes : PaginaBase
                 //Agregar prestamo
 
                 Prestamo Prestamo = new();
-                
-                Prestamo.IdTpoPrestamo=  SQLite.ObtenerEstPrestamoPorUsuario(IdUsuarioActual);
-                Prestamo.IdEstPrestamo= SQLite.ObtenerTipoPrestamoPorUsuario(IdUsuarioActual);
+
+                Prestamo.IdTpoPrestamo = SQLite.ObtenerEstPrestamoPorUsuario(IdUsuarioActual);
+                Prestamo.IdEstPrestamo = SQLite.ObtenerTipoPrestamoPorUsuario(IdUsuarioActual);
 
                 Prestamo.IdUsuario = IdUsuarioActual;
                 Prestamo.IdSalon = salon.Id;
@@ -217,18 +292,19 @@ public class PrestamosEstudiantes : PaginaBase
                     {
                         foreach (var item in equiposPrestados)
                         {
-                            for (int i = 0; i < item.CntDisponible;i++)          {
+                            for (int i = 0; i < item.CntDisponible; i++)
                             {
-        
-                            PrmEquipo equipos = new();
-                            equipos.IdPrestamo = SQLite.ObtenerIdUltimoPrestamo();
-                            equipos.IdEquipo = item.Id;   //relaciona cada uno de los items
+                                {
 
-                            SQLite.InsertarEquipo(equipos);
+                                    PrmEquipo equipos = new();
+                                    equipos.IdPrestamo = SQLite.ObtenerIdUltimoPrestamo();
+                                    equipos.IdEquipo = item.Id;   //relaciona cada uno de los items
+
+                                    SQLite.InsertarEquipo(equipos);
+                                }
+
                             }
-
                         }
-                    }
                     }
                     else
                     {
@@ -300,10 +376,27 @@ public class PrestamosEstudiantes : PaginaBase
         }
         catch (Exception e)
         {
-            Console.WriteLine("Ocurrio un error al consultar el almacenista, por favor intentalo mas tarde");
+            Console.WriteLine("Ocurrio un error al consultar el tipo de usuario, por favor intentalo mas tarde");
             Console.WriteLine($"Mensaje de error: {e.Message}");
             Console.WriteLine("\nPresiona cualquier tecla para continuar...");
             Console.ReadKey();
         }
     }
+
+
+    //Listar préstamos
+
+    public void ListarPrestamo(long IdEstPrestamo, long IdTpoPrestamo, Usuario _Usuario)
+    {
+
+        //Listar los prestamos dependiendo del estado, tpo y el usuario.
+
+        
+
+
+    }
+
+
+
+
 }

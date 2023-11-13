@@ -82,8 +82,48 @@ public class Default : PaginaBase
 				}
 				else
 				{
+					Console.WriteLine(opcionSeleccionada);
+					Console.ReadKey();
+					switch (opcionSeleccionada)
+					{
+						
+						case "MantenimientoAlmacenistas":
+							MantenimientoAlmacenistas mantenimientoAlmacenistas = new MantenimientoAlmacenistas(base.configuracion);
+							mantenimientoAlmacenistas.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoAlmacenistas.Mostrar();
+							break;
+						case "MantenimientoPrestamos":
+							MantenimientoPrestamos mantenimientoPrestamos = new MantenimientoPrestamos(base.configuracion);
+							mantenimientoPrestamos.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoPrestamos.Mostrar();
+							break;
+						case "MantenimientoCoordinadores":
+							MantenimientoCoordinadores mantenimientoCoordinadores = new MantenimientoCoordinadores(base.configuracion);
+							mantenimientoCoordinadores.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoCoordinadores.Mostrar();
+							break;
+						case "MantenimientoProfesores":
+							MantenimientoProfesores mantenimientoProfesores = new MantenimientoProfesores(base.configuracion);
+							mantenimientoProfesores.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoProfesores.Mostrar();
+							break;
+						case "MantenimientoMantenimientos":
+							MantenimientoMantenimientos mantenimientoMantenimientos = new MantenimientoMantenimientos(base.configuracion);
+							mantenimientoMantenimientos.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoMantenimientos.Mostrar();
+							break;
+						case "MantenimientoEstudiantes":
+							MantenimientoEstudiantes mantenimientoEstudiantes = new MantenimientoEstudiantes(base.configuracion);
+							mantenimientoEstudiantes.IdUsuarioActual = IdUsuarioActual;
+							mantenimientoEstudiantes.Mostrar();
+							break;
+						default:
+							break;
+					}
 					string nombreClase = opcionSeleccionada;
 					Type tipoClase = Type.GetType(nombreClase);
+
+
 
 					if (tipoClase != null)
 					{
@@ -118,10 +158,16 @@ public class Default : PaginaBase
 		}
 		catch (Exception e)
 		{
-			Console.WriteLine("Ocurrió un error al consultar tu usuario, por favor inténtalo más tarde");
-			Console.WriteLine($"Mensaje de error: {e.Message}");
-			Console.WriteLine("\nPresiona cualquier tecla para continuar...");
-			Console.ReadKey();
+			Console.WriteLine("Error al guardar cambios en la base de datos: " + e.Message);
+				Console.WriteLine("Stack trace: " + e.StackTrace);
+				Console.WriteLine("Excepción datos: " + e.Data);
+				if (e.InnerException != null)
+				{
+					Console.WriteLine("Excepción interna: " + e.InnerException.Message);
+					Console.WriteLine("Excepción interna stack trace: " + e.InnerException.StackTrace);
+				}
+
+				Console.ReadKey();
 		}
 	}
 

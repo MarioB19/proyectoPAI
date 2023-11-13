@@ -45,7 +45,7 @@ public class MantenimientoMantenimientos : PaginaBase
 		if (!MantenimientoNuevo)
 		{
 			ConsultarAlmacenista();
-				base.IdTpoUsuarioActual = (int)UsuarioActual.IdTpoUsuario;
+			base.IdTpoUsuarioActual = (int)UsuarioActual.IdTpoUsuario;
 		}
 
 	
@@ -54,6 +54,9 @@ public class MantenimientoMantenimientos : PaginaBase
 			return;
 		}
 		MantenimientoNuevo = IdMantenimientoActual == -1;
+
+		Console.WriteLine(IdUsuarioActual);
+		Console.ReadKey();
 		if (MantenimientoNuevo)
 		{
 			Agregar();
@@ -219,105 +222,23 @@ public void Actualizar()
 		bool usuarioAgregado = false;
 
 		Console.Clear();
-		Console.WriteLine("Agregando un nuevo Almacenista");
-
-		// Solicitar los datos del usuario
-		Console.Write("Ingresa el nombre del usuario: ");
-		string nombre = Console.ReadLine();
-
-		while (!Utilidades.VerificarNombre(nombre))
-		{
-			Console.Clear();
-			Console.WriteLine("Nombre no válido, inténtalo de nuevo");
-			Console.Write("\nIngresa el nombre del usuario: ");
-			nombre = Console.ReadLine();
-		};
-
-		Console.Write("Ingresa el apellido paterno del usuario: ");
-		string aplPaterno = Console.ReadLine();
-
-		while (!Utilidades.VerificarNombre(aplPaterno))
-		{
-			Console.Clear();
-			Console.WriteLine("Apellido paterno no válido, inténtalo de nuevo");
-			Console.Write("\nIngresa el apellido paterno del usuario: ");
-			aplPaterno = Console.ReadLine();
-		};
-
-		Console.Write("Ingresa el apellido materno del usuario: ");
-		string aplMaterno = Console.ReadLine();
-
-		while (!Utilidades.VerificarNombre(aplMaterno))
-		{
-			Console.Clear();
-			Console.WriteLine("Apellido materno no válido, inténtalo de nuevo");
-			Console.Write("\nIngresa el apellido materno del usuario: ");
-			aplMaterno = Console.ReadLine();
-		};
-
-		Console.Write("Ingresa la nomina: ");
-		string nomina = Console.ReadLine();
-
-		while (!Utilidades.VerificarRegistroNomina(nomina))
-		{
-			Console.Clear();
-			Console.WriteLine("Nómina no válida, inténtalo de nuevo");
-			Console.Write("\nIngresa la nomina: ");
-			nomina = Console.ReadLine();
-		};
-
-		Console.Write("Ingresa la contraseña del usuario: ");
-		string contrasena = Console.ReadLine();
-		string contrasenaEncriptada = Utilidades.EncriptarContrasenaSHA256(contrasena);
-
+		Console.WriteLine("Agregando un nuevo Mantenimiento");
 		try
 		{
-
-			UsuarioActual = new Usuario
-			{
-				IdTpoUsuario = (long)Enumeradores.tps_usuarios.Almacenista,
-				IdEstUsuario = (long)Enumeradores.est_usuarios.Activo,
-				Nombre = nombre,
-				AplPaterno = aplPaterno,
-				AplMaterno = aplMaterno,
-				Contrasena = Encoding.UTF8.GetBytes(contrasenaEncriptada),
-				FchCreacion = DateTime.Now
-			};
-
-			// Guardar el nuevo usuario en la base de datos
-			usuarioAgregado = SQLite.InsertarUsuario(UsuarioActual);
-
-			if (usuarioAgregado)
-			{
-				// Crear una nueva instancia de Almacenista y asignar el ID del usuario
-				AlmacenistaActual = new Almacenista
-				{
-					IdUsuario = UsuarioActual.Id,
-					Nomina = long.Parse(nomina),
-					FchCreacion = DateTime.Now
-				};
-
-				// Insertar el almacenista en la base de datos
-				almacenistaAgregado = SQLite.InsertarAlmacenista(AlmacenistaActual);
-			}
+			Console.WriteLine($"Ingresa la descripcion del mantenimiento: ");
+			
 		}
-		catch (Exception e)
+		catch(Exception e)
 		{
-			Console.WriteLine("Ocurrió un error al agregar el nuevo almacenista, por favor inténtalo más tarde");
-			Console.WriteLine($"Mensaje de error: {e.Message}");
-			Console.WriteLine("\nPresiona cualquier tecla para continuar...");
-			Console.ReadKey();
+
 		}
 
-		if (!almacenistaAgregado)
-		{
-			Console.WriteLine("Error al agregar el almacenista. Verifica los datos y vuelve a intentarlo.");
-			Console.WriteLine("Presiona cualquier tecla para continuar...");
-			Console.ReadKey();
-			return;
-		}
+		Console.WriteLine("\nIngresa la descripción del mantenimiento: ");
+		MantenimientoActual.Descripciones = Console.ReadLine();
 
-		Console.WriteLine("Almacenista agregado exitosamente.");
+
+
+		Console.WriteLine("Mantenimiento agregado exitosamente.");
 		Console.WriteLine("Presiona cualquier tecla para continuar...");
 		Console.ReadKey();
 	}
